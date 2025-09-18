@@ -50,7 +50,11 @@ export default function ProductCreatePage() {
 						</div>
 					</div>
 					<div className="col right">
-						<ProductForm onSubmit={onSubmit} submitting={submitting} onFormChange={handleFormChange} />
+						<ProductForm
+							onSubmit={onSubmit}
+							submitting={submitting}
+							onFormChange={handleFormChange}
+						/>
 					</div>
 				</div>
 			</div>

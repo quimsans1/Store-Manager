@@ -17,7 +17,7 @@ export default function ProductEditPage() {
 		return () => dispatch(clearCurrent());
 	}, [dispatch, id]);
 
-	// Update form values when current product loads
+	// Actualitza els valors del formulari quan el producte actual carrega
 	useEffect(() => {
 		if (current) {
 			setFormValues({
@@ -44,7 +44,9 @@ export default function ProductEditPage() {
 		<div className="container">
 			<header className="header">
 				<h1>Edit product</h1>
-				<Link className="btn" to="/"><span className="back-arrow">←</span> Back to Products</Link>
+				<Link className="btn" to="/">
+					<span className="back-arrow">←</span> Back to Products
+				</Link>
 			</header>
 
 			{loading && <p>Loading...</p>}
