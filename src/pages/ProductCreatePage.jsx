@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import ProductForm from '../components/ProductForm';
+import ProductForm from '../components/products/productForm/ProductForm';
 import { createProduct } from '../features/products/productsSlice';
+import './ProductPages.css';
 
 export default function ProductCreatePage() {
 	const dispatch = useDispatch();

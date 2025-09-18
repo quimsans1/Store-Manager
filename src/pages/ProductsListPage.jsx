@@ -2,34 +2,52 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteProduct, fetchProducts, setFilters } from '../features/products/productsSlice';
-import { PRODUCT_CATEGORIES } from '../features/products/constants';
-import ProductCard from '../components/ProductCard';
-import ProductDetailModal from '../components/ProductDetailModal';
-import ConfirmModal from '../components/ConfirmModal';
+import { PRODUCT_CATEGORIES } from '../features/constants/constants';
+import ProductCard from '../components/products/productCard/ProductCard';
+import ProductDetailModal from '../components/products/productDetailModal/ProductDetailModal';
+import ConfirmModal from '../components/ui/modals/ConfirmModal';
+import Spinner from '../components/ui/spinner/Spinner';
+import Pagination from '../components/ui/pagination/Pagination';
 
 export default function ProductsListPage() {
 	const dispatch = useDispatch();
-	const { items, loading, error, filters } = useSelector((s) => s.products);
+	const { items, loading, error, filters, pagination } = useSelector((s) => s.products);
 	const [inputSearch, setInputSearch] = useState(filters.search || '');
 	const [inputCategory, setInputCategory] = useState(filters.category || '');
 	const [selected, setSelected] = useState(null);
 	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 	const [productToDelete, setProductToDelete] = useState(null);
 
-	// FILTER PRODUCTS
+	// FILTER PRODUCTS - only when filters or pagination actually change
 	useEffect(() => {
-		dispatch(fetchProducts(filters));
-	}, [dispatch, filters]);
+		// Sempre recarreguem els productes quan canviem de pàgina o filtres
+		// Això assegura que sempre tenim dades actualitzades
+		dispatch(fetchProducts({ 
+			filters, 
+			pagination: { 
+				page: pagination.currentPage, 
+				itemsPerPage: pagination.itemsPerPage 
+			} 
+		}));
+	}, [dispatch, filters, pagination.currentPage, pagination.itemsPerPage]);
 
 	// ALL CATEGORIES
 	const categories = useMemo(() => {
 		return ['', ...PRODUCT_CATEGORIES];
 	}, []);
 
-	// UPDATE FILTERS when STATE changes
-	useEffect(() => {
-		dispatch(setFilters({ search: inputSearch, category: inputCategory }));
-	}, [dispatch, inputSearch, inputCategory]);
+	// Handle filter changes
+	const handleSearchChange = (e) => {
+		const value = e.target.value;
+		setInputSearch(value);
+		dispatch(setFilters({ search: value, category: inputCategory }));
+	};
+
+	const handleCategoryChange = (e) => {
+		const value = e.target.value;
+		setInputCategory(value);
+		dispatch(setFilters({ search: inputSearch, category: value }));
+	};
 
 	// --- DELETE PRODUCT ---
 	const handleDelete = (id) => {
@@ -61,9 +79,9 @@ export default function ProductsListPage() {
 					type="text"
 					placeholder="Search by name, price, or category"
 					value={inputSearch}
-					onChange={(e) => setInputSearch(e.target.value)}
+					onChange={handleSearchChange}
 				/>
-				<select value={inputCategory} onChange={(e) => setInputCategory(e.target.value)}>
+				<select value={inputCategory} onChange={handleCategoryChange}>
 					{categories.map((c) => (
 						<option key={c || 'all'} value={c}>{c || 'All categories'}</option>
 					))}
@@ -71,19 +89,24 @@ export default function ProductsListPage() {
 				<Link className="btn accent" to="/products/new">New Product</Link>
 			</div>
 
-			{loading && <p>Loading...</p>}
+			{loading && <Spinner size="large" className="center" />}
 			{error && <p className="error">{error}</p>}
 
-			<div className="grid">
-				{items.map((p) => (
-					<ProductCard
-						key={p.id}
-						product={p}
-						onClick={setSelected}
-						onDelete={handleDelete}
-					/>
-				))}
-			</div>
+			{!loading && (
+				<>
+					<div className="grid">
+						{items.map((p) => (
+							<ProductCard
+								key={p.id}
+								product={p}
+								onClick={setSelected}
+								onDelete={handleDelete}
+							/>
+						))}
+					</div>
+					<Pagination />
+				</>
+			)}
 
 			<ProductDetailModal
 				product={selected}

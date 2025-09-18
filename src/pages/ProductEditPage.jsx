@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import ProductForm from '../components/ProductForm';
+import ProductForm from '../components/products/productForm/ProductForm';
 import { clearCurrent, fetchProductById, updateProduct } from '../features/products/productsSlice';
+import Spinner from '../components/ui/spinner/Spinner';
+import './ProductPages.css';
 
 export default function ProductEditPage() {
 	const { id } = useParams();
@@ -17,7 +19,7 @@ export default function ProductEditPage() {
 		return () => dispatch(clearCurrent());
 	}, [dispatch, id]);
 
-	// Actualitza els valors del formulari quan el producte actual carrega
+	// Actualitza els valors del formulari quan el producte actual carrega (current)
 	useEffect(() => {
 		if (current) {
 			setFormValues({
@@ -49,14 +51,25 @@ export default function ProductEditPage() {
 				</Link>
 			</header>
 
-			{loading && <p>Loading...</p>}
+			{loading && <Spinner size="large" className="center" />}
 
 			{current && (
 				<div className="panel">
 					<div className="two-col">
 						<div className="col left">
 							<div className="preview">
-								<img src={formValues.imageUrl || current.imageUrl} alt={formValues.name || current.name} />
+								{(formValues.imageUrl || current.imageUrl) ? (
+									<img 
+										src={formValues.imageUrl || current.imageUrl} 
+										alt={formValues.name || current.name} 
+									/>
+								) : (
+									<div className="image-placeholder">
+										<div className="placeholder-icon">📷</div>
+										<div className="placeholder-text">No image available</div>
+										<div className="placeholder-subtext">Add an image URL to see preview</div>
+									</div>
+								)}
 							</div>
 							<div className="preview-data">
 								<h2 style={{ margin: 0 }}>{formValues.name || current.name}</h2>

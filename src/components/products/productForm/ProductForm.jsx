@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { PRODUCT_CATEGORIES } from '../features/products/constants';
+import { PRODUCT_CATEGORIES } from '../../../features/constants/constants';
+import Spinner from '../../ui/spinner/Spinner';
+import './ProductForm.css';
 
 export default function ProductForm({ initialValues, onSubmit, submitting, onFormChange }) {
 	const [values, setValues] = useState(
@@ -147,11 +149,10 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 			</label>
 			<div className="form-actions">
 				<button className="btn accent" type="submit" disabled={submitting || Object.keys(errors).length > 0}>
+					{submitting && <Spinner size="small" className="inline" />}
 					{submitting ? 'Saving...' : 'Save'}
 				</button>
 			</div>
 		</form>
 	);
 }
-
-

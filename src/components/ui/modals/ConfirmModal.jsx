@@ -1,3 +1,5 @@
+import './ConfirmModal.css';
+
 export default function ConfirmModal({ open, onClose, onConfirm, title, message, confirmText = 'Confirm', cancelText = 'Cancel' }) {
 	if (!open) return null;
 

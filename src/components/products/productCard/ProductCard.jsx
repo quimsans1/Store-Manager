@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import './ProductCard.css';
 
 export default function ProductCard({ product, onClick, onDelete }) {
 	return (
@@ -38,5 +39,3 @@ export default function ProductCard({ product, onClick, onDelete }) {
 		</div>
 	);
 }
-
-
