@@ -5,7 +5,7 @@ export default function ProductDetailModal({ product, open, onClose, onDelete })
 	if (!open || !product) return null;
 
 	return (
-		<div className="modal-backdrop" onClick={onClose}>
+		<div className="modal-background-layer" onClick={onClose}>
 			<div className="modal" onClick={(e) => e.stopPropagation()}>
 				<button className="modal-close" onClick={onClose} aria-label="Close">×</button>
 				<div className="product-detail">
@@ -18,7 +18,7 @@ export default function ProductDetailModal({ product, open, onClose, onDelete })
 					<p className="price">{Number(product.price).toFixed(2)} €</p>
 
 					{/* Botons EDITAR i ELIMINAR */}
-					<div className="form-actions">
+					<div className="form-btn">
 						<Link
 							style={{ marginRight: '10px' }}
 							className="btn"

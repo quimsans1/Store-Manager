@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import ProductForm from '../components/products/productForm/ProductForm';
-import { createProduct } from '../features/products/productsSlice';
+import ProductForm from '../../components/products/productForm/ProductForm';
+import { createProduct } from '../../features/products/productsSlice';
 import './ProductPages.css';
 
 export default function ProductCreatePage() {
@@ -26,7 +26,9 @@ export default function ProductCreatePage() {
 		<div className="container">
 			<header className="header">
 				<h1>New product</h1>
-				<Link className="btn" to="/"><span className="back-arrow">←</span> Back to Products</Link>
+				<Link className="btn" to="/">
+					<span className="back-arrow">←</span> Back to Products
+				</Link>
 			</header>
 
 			<div className="panel">

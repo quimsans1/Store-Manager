@@ -1,6 +1,6 @@
-// Products database - in-memory data for the application
+// Base de dades dels productes per a l'aplicació
 export const initialProductsDb = [
-	// Accessories
+	// Accessoris
 	{ id: '19647583', name: 'PC Mouse', price: 19.99, category: 'Accessories', imageUrl: 'https://static.fnac-static.com/multimedia/Images/ES/MC/29/0d/52/5377321/1541-2/tsp20161220090558/Raton-Mouse-usb-Cable-Iluminacion-Para-PC-Gaming-Ordenador-Optico-2400-dpi-Negro.jpg' },
 	{ id: '23758295', name: 'Keyboard', price: 79.99, category: 'Accessories', imageUrl: 'https://m.media-amazon.com/images/I/613eXhkRJxL.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_PIRIOFOURANDHALF-medium,BottomLeft,30,-20_ZJPHNwYW4gZm9yZWdyb3VuZD0iIzU2NTk1OSIgZm9udD0iQW1hem9uRW1iZXIgNTAiID45NzE8L3NwYW4+,500,900,420,420,0,0_QL100_.jpg' },
 

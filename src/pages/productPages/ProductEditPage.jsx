@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import ProductForm from '../components/products/productForm/ProductForm';
-import { clearCurrent, fetchProductById, updateProduct } from '../features/products/productsSlice';
-import Spinner from '../components/ui/spinner/Spinner';
+import ProductForm from '../../components/products/productForm/ProductForm';
+import { clearCurrent, fetchProductById, updateProduct } from '../../features/products/productsSlice';
+import { CircularProgress } from '@mui/material';
 import './ProductPages.css';
 
 export default function ProductEditPage() {
@@ -51,7 +51,7 @@ export default function ProductEditPage() {
 				</Link>
 			</header>
 
-			{loading && <Spinner size="large" className="center" />}
+			{loading && <CircularProgress size={40} sx={{ color: 'var(--primary, #3b82f6)', display: 'flex', margin: '50px auto' }} />}
 
 			{current && (
 				<div className="panel">

@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteProduct, fetchProducts, setFilters } from '../features/products/productsSlice';
-import { PRODUCT_CATEGORIES } from '../features/constants/constants';
-import ProductCard from '../components/products/productCard/ProductCard';
-import ProductDetailModal from '../components/products/productDetailModal/ProductDetailModal';
-import ConfirmModal from '../components/ui/modals/ConfirmModal';
-import Spinner from '../components/ui/spinner/Spinner';
-import Pagination from '../components/ui/pagination/Pagination';
+import { deleteProduct, fetchProducts, setFilters } from '../../features/products/productsSlice';
+import { PRODUCT_CATEGORIES } from '../../features/products/constants/categories';
+import ProductCard from '../../components/products/productCard/ProductCard';
+import ProductDetailModal from '../../components/products/productDetailModal/ProductDetailModal';
+import ConfirmModal from '../../components/ui/modals/ConfirmModal';
+import { CircularProgress } from '@mui/material';
+import Pagination from '../../components/ui/pagination/Pagination';
 
 export default function ProductsListPage() {
 	const dispatch = useDispatch();
@@ -25,13 +25,13 @@ export default function ProductsListPage() {
 		dispatch(fetchProducts({ 
 			filters, 
 			pagination: { 
-				page: pagination.currentPage, 
-				itemsPerPage: pagination.itemsPerPage 
+				page: pagination.currentPage,
+				itemsPerPage: pagination.itemsPerPage
 			} 
 		}));
 	}, [dispatch, filters, pagination.currentPage, pagination.itemsPerPage]);
 
-	// ALL CATEGORIES
+	// Totes les categories pel selector de categoria
 	const categories = useMemo(() => {
 		return ['', ...PRODUCT_CATEGORIES];
 	}, []);
@@ -74,6 +74,7 @@ export default function ProductsListPage() {
 				<h1>Products</h1>
 			</header>
 
+			{/* Filtres */}
 			<div className="filters">
 				<input
 					type="text"
@@ -83,17 +84,24 @@ export default function ProductsListPage() {
 				/>
 				<select value={inputCategory} onChange={handleCategoryChange}>
 					{categories.map((c) => (
-						<option key={c || 'all'} value={c}>{c || 'All categories'}</option>
+						<option
+							key={c || 'all'}
+							value={c}
+						>
+							{c || 'All categories'}
+						</option>
 					))}
 				</select>
 				<Link className="btn accent" to="/products/new">New Product</Link>
 			</div>
-
-			{loading && <Spinner size="large" className="center" />}
+			
+			{loading && <CircularProgress size={40} sx={{ color: 'var(--primary, #3b82f6)', display: 'flex', margin: '50px auto' }} />}
+			{/* Error */}
 			{error && <p className="error">{error}</p>}
-
+			
 			{!loading && (
 				<>
+					{/* Product Cards */}
 					<div className="grid">
 						{items.map((p) => (
 							<ProductCard
@@ -104,6 +112,8 @@ export default function ProductsListPage() {
 							/>
 						))}
 					</div>
+
+					{/* Pagination */}
 					<Pagination />
 				</>
 			)}

@@ -4,21 +4,22 @@ import './Pagination.css';
 
 export default function Pagination() {
 	const dispatch = useDispatch();
-	const { pagination } = useSelector((state) => state.products);
 	
+	// OBTENIM LES DADES DE PÀGINACIÓ DE REDUX
+	const { pagination } = useSelector((state) => state.products);	
 	const { currentPage, totalPages, totalItems, itemsPerPage } = pagination;
 
-	// No mostrar paginació si només hi ha una pàgina o cap producte
+	// No mostrar paginació si només hi ha una pàgina o zero productes
 	if (totalPages <= 1) {
 		return null;
 	}
 
+	{/* HANDLES PER NAVEGACIÓ DE PÀGINES */}
 	const handlePreviousPage = () => {
 		if (currentPage > 1) {
 			dispatch(setCurrentPage(currentPage - 1));
 		}
 	};
-
 	const handleNextPage = () => {
 		if (currentPage < totalPages) {
 			dispatch(setCurrentPage(currentPage + 1));
@@ -31,12 +32,13 @@ export default function Pagination() {
 
 	return (
 		<div className="pagination">
+			{/* INFORMACIÓ SOBRE LA PÀGINACIÓ */}
 			<div className="pagination-info">
 				Showing {startItem}-{endItem} of {totalItems} products
 			</div>
 			
 			<div className="pagination-controls">
-				{/* Previous page Button*/}
+				{/* PERVIOUS PAGE BUTTON*/}
 				<button
 					className="btn"
 					onClick={handlePreviousPage}
@@ -53,7 +55,7 @@ export default function Pagination() {
 					</span>
 				</div>
 				
-				{/* Next page Button*/}
+				{/* NEXT PAGE BUTTON*/}
 				<button
 					className="btn"
 					onClick={handleNextPage}

@@ -1,6 +1,6 @@
 // In-memory async repository simulating server latency
 // L'aplicació utilitza un repositori in-memory que simula una API:
-import { initialProductsDb } from './initialProductsDb.js';
+import { initialProductsDb } from '../data/initialProductsDb.js';
 let productsDb = [...initialProductsDb];
 
 // Array que retorna el Promise amb un setTimeout

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { PRODUCT_CATEGORIES } from '../../../features/constants/constants';
-import Spinner from '../../ui/spinner/Spinner';
+import { PRODUCT_CATEGORIES } from '../../../features/products/constants/categories';
+
 import './ProductForm.css';
 
 export default function ProductForm({ initialValues, onSubmit, submitting, onFormChange }) {
@@ -10,6 +10,7 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 	const [errors, setErrors] = useState({});
 	const [touched, setTouched] = useState({});
 
+	{/* SET INITIAL VALUES */}
 	useEffect(() => {
 		if (initialValues) {
 			setValues(
@@ -21,14 +22,14 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 		}
 	}, [initialValues]);
 
-	// NOTIFY PARENT COMPONENT about FORM CHANGES
+	// NOTIFICAR AL COMPONENT PARE DE CANVIS AL FORMULARI
 	useEffect(() => {
 		if (onFormChange) {
 			onFormChange(values);
 		}
 	}, [values, onFormChange]);
 
-	// BASIC VALIDATION of THE FORM (required fields, numeric format, etc.)
+	// VALIDACIONS BÀSIQUES DEL FORMULARI (camps requerits, format numèric, etc.)
 	const validate = useMemo(() => (vals) => {
 		const e = {};
 		const name = vals.name?.trim() || '';
@@ -37,7 +38,7 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 		const priceStr = String(vals.price ?? '').trim();
 		const priceNum = Number(priceStr);
 		const priceRegex = /^\d+(?:\.[0-9]{1,2})?$/;
-		const urlRegex = /^https?:\/\/.+/; // More flexible URL validation that accepts various image hosting services
+		const urlRegex = /^https?:\/\/.+/;
 
 		if (!name) e.name = 'Name is required';
 		else if (name.length < 2) e.name = 'Name must be at least 2 characters';
@@ -57,6 +58,7 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 		return e;
 	}, []);
 
+	{/* HANDLE SUBMIT */}
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const eObj = validate(values);
@@ -70,6 +72,7 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 		});
 	};
 
+	{/* HANDLE SET FIELD */}
 	const setField = (field, value) => {
 		setValues((v) => {
 			const next = { ...v, [field]: value };
@@ -83,6 +86,7 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 
 	return (
 		<form className="form" onSubmit={handleSubmit} noValidate>
+			{/* NAME */}
 			<label>
 				<span>Name</span>
 				<input
@@ -93,11 +97,18 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 					value={values.name}
 					onChange={(e) => setField('name', e.target.value)}
 					onBlur={() => markTouched('name')}
-					aria-invalid={!!errors.name}
-					aria-describedby="name-error"
 				/>
-				{(touched.name || submitting) && errors.name && <small id="name-error" className="error">{errors.name}</small>}
+				{/* Missatge d'error */}
+				{
+					(touched.name || submitting) &&
+					errors.name &&
+					<small id="name-error" className="error">
+						{errors.name}
+					</small>
+				}
 			</label>
+
+			{/* PRICE */}
 			<label>
 				<span>Price</span>
 				<input
@@ -109,11 +120,18 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 					value={values.price}
 					onChange={(e) => setField('price', e.target.value)}
 					onBlur={() => markTouched('price')}
-					aria-invalid={!!errors.price}
-					aria-describedby="price-error"
 				/>
-				{(touched.price || submitting) && errors.price && <small id="price-error" className="error">{errors.price}</small>}
+				{/* Missatge d'error */}
+				{
+					(touched.price || submitting) &&
+					errors.price &&
+					<small id="price-error" className="error">
+						{errors.price}
+					</small>
+				}
 			</label>
+
+			{/* CATEGORY */}
 			<label>
 				<span>Category</span>
 				<select
@@ -121,8 +139,6 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 					value={values.category}
 					onChange={(e) => setField('category', e.target.value)}
 					onBlur={() => markTouched('category')}
-					aria-invalid={!!errors.category}
-					aria-describedby="category-error"
 				>
 					<option value="">Select a category</option>
 					{PRODUCT_CATEGORIES.map((category) => (
@@ -131,8 +147,17 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 						</option>
 					))}
 				</select>
-				{(touched.category || submitting) && errors.category && <small id="category-error" className="error">{errors.category}</small>}
+				{/* Missatge d'error */}
+				{
+					(touched.category || submitting) &&
+					errors.category &&
+					<small id="category-error" className="error">
+						{errors.category}
+					</small>
+				}
 			</label>
+
+			{/* IMAGE URL */}
 			<label>
 				<span>Image URL</span>
 				<input
@@ -142,14 +167,20 @@ export default function ProductForm({ initialValues, onSubmit, submitting, onFor
 					value={values.imageUrl}
 					onChange={(e) => setField('imageUrl', e.target.value)}
 					onBlur={() => markTouched('imageUrl')}
-					aria-invalid={!!errors.imageUrl}
-					aria-describedby="imageUrl-error"
 				/>
-				{(touched.imageUrl || submitting) && errors.imageUrl && <small id="imageUrl-error" className="error">{errors.imageUrl}</small>}
+				{/* Missatge d'error */}
+				{
+					(touched.imageUrl || submitting) &&
+					errors.imageUrl &&
+					<small id="imageUrl-error" className="error">
+						{errors.imageUrl}
+					</small>
+				}
 			</label>
-			<div className="form-actions">
+
+			{/* SUBMIT BUTTON */}
+			<div className="form-btn">
 				<button className="btn accent" type="submit" disabled={submitting || Object.keys(errors).length > 0}>
-					{submitting && <Spinner size="small" className="inline" />}
 					{submitting ? 'Saving...' : 'Save'}
 				</button>
 			</div>

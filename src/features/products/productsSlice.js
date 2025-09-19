@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { productsRepo } from './productsRepo';
+import { productsRepo } from './api/productsRepo';
 
 // Cada thunk gestiona una crida async al repositori de productes.
 // Això permet separar la lògica d'accés a dades i centralitzar-la a Redux.

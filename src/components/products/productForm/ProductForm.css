@@ -1,4 +1,3 @@
-/* Product Form styles */
 .form {
 	display: grid;
 	gap: 12px;
@@ -10,7 +9,7 @@
 	gap: 6px;
 }
 
-.form .form-actions {
+.form .form-btn {
 	display: flex;
 	gap: 8px;
 	justify-content: center;
