@@ -5,7 +5,7 @@ import { deleteProduct, fetchProducts, setFilters } from '../../features/product
 import { PRODUCT_CATEGORIES } from '../../features/products/constants/categories';
 import ProductCard from '../../components/products/productCard/ProductCard';
 import ProductDetailModal from '../../components/products/productDetailModal/ProductDetailModal';
-import ConfirmModal from '../../components/ui/modals/ConfirmModal';
+import ConfirmModal from '../../components/ui/modals/confirmModal/ConfirmModal';
 import { CircularProgress } from '@mui/material';
 import Pagination from '../../components/ui/pagination/Pagination';
 
