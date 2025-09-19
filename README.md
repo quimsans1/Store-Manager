@@ -93,7 +93,7 @@ Cada feature gestiona la seva pròpia lògica, així doncs, en cas de modificar 
 He triat Redux Toolkit sobre altres alternatives com Context API, ja que la quantitat de dades podria augmentar en gran mesura si l'aplicació creix i el Context API comportaria complicacions. En quant a Zustand, no hi tinc experiència.
 Una aplicació com aquesta ha de recordar quins productes hi ha al catàleg, quins filtres ha aplicat l'usuari administrador, en quina pàgina està navegant, quins productes està editant, l'estat de les operacions (creant, editant, eliminant), etc. Si utilitzés Context API (més simple), cada vegada que es produís un canvi, com crear un nou producte, tots els components que escolten aquest context es tornarien a renderitzar, fins i tot els que no necessiten aquesta informació. Això faria que l'aplicació funcionés més lenta.
 
-**Com escalaria l'estat si el domini creix?:**
+**Com escalaria l'estat si el domini creix?**
 
 Ara mateix només es gestionen productes, però si l'aplicació creix, es gestionarien llistes d'usuaris, tracking i estat de comandes, analítiques de vendes i informes, estoc, proveïdors, incidències, tipus de moneda, personalització de l'aplicació, etc.
 En el futur, cada secció (productes, usuaris, comandes, etc.) tindria la seva pròpia "caixa" (slice) amb les seves regles. De manera que, si es fan canvis en l'apartat d'usuaris, no afecta la part de productes. Cada secció es gestionaria sense molestar les altres.
@@ -118,40 +118,24 @@ Per exemple, l'estat podria evolucionar de la següent manera:
 
 Totes les operacions de dades de productes (CRUD) passen a través del `productsRepo`.
 
-Aquesta separació facilita el testing, ja que permet mockar el repository completament sense tocar la lògica de Redux del Slice o els components que depenen de l'estat del Slice. A més, si en el futur es vol canviar de localStorage a una API real, només s'ha de modificar el repositori, mantenint la lògica del `productsSlice` neta, i facilitant també el testing en el Slice, ja que tots els thunks i reducers continuen funcionant amb les mateixes dades.
+Aquesta separació facilita el testing, ja que permet mockar el repository completament sense tocar la lògica de Redux del Slice o els components que depenen de l'estat del Slice. A més, si en el futur es vol canviar de localStorage a una API real, només s'ha de modificar el repositori, mantenint la lògica del `productsSlice` neta, i facilitant també el testing en el Slice, ja que tots els thunks i reducers continuen funcionant amb les mateixes dades. La migració a una API real seria senzilla, només caldria canviar el repositori.
 
 **Repositori In-Memory amb Simulació Async**
 
 L'aplicació utilitza un repositori in-memory que simula una API amb el retard del servidor. Es troba a `src/features/products/api/productsRepo.js` i ofereix diversos avantatges pel desenvolupament i testing. He escollit aquesta opció perquè em facilita el desenvolupament frontend sense necessitat d'un backend.
 
-5. **Migració**: Fàcil migració a una API real - només cal canviar el repositori
+**Base de Dades Inicial:**
 
-**Funcionalitats Implementades:**
+El repositori s'inicialitza amb dades de prova (`src/features/products/data/initialProductsDb.js`) que inclouen més de 20 productes de diverses categories (Electronics, Gaming, Mobile, etc.) per facilitar les demostracions.
+
+**Material UI**
+
+He utilitzat el component Spinner de Material-UI per aconseguir un element de càrrega amb un disseny coherent i una implementació ràpida.
+
+## Funcionalitats Implementades
 - **CRUD complet**: Create, Read, Update, Delete de productes
 - **Filtratge**: Cerca per nom, preu i categoria
 - **Paginació**: Gestió de pàgines amb control de nombre d'items per pàgina
 - **Persistència**: Les dades es mantenen durant la sessió de l'aplicació
-- **Validació**: Gestió d'errors i casos edge (producte no trobat, etc.)
-
-**Base de Dades Inicial:**
-El repositori s'inicialitza amb dades de prova (`src/features/products/data/initialProductsDb.js`) que inclouen 20+ productes de diverses categories (Electronics, Gaming, Mobile, etc.) per facilitar les proves i demostracions.
-
-#### 5. **Material UI**
-
-He utilitzat el component Spinner de Material-UI per aconseguir un element de càrrega amb un disseny coherent i una implementació ràpida.
-
-
-## Funcionalitats Implementades
-
-- **CRUD de Productes**:
-Obtenir, crear, actualitzar i eliminar
-- **Filtres**:
-Cercador (per nom, preu i categoria). Selector per categoria.
-- **Paginació**
-- **Validació de Formularis**
-- **Estats de Càrrega i Error**:
-Feedback visual amb un Spinner. Missatges d'error en el formulari. Estats de càrrega per les operacions.
-- **Gestió d'Errors**:
-Maneig d'errors amb feedback visual
-- **Estructura Escalable**:
-Components reutilitzables. Separació clara de responsabilitats.
+- **Estructura Escalable**: Components reutilitzables. Separació clara de responsabilitats.
+- **Validació i Gestió d'Errors**: Maneig d'errors amb feedback visual
