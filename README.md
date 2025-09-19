@@ -133,9 +133,9 @@ El repositori s'inicialitza amb dades de prova (`src/features/products/data/init
 He utilitzat el component Spinner de Material-UI per aconseguir un element de càrrega amb un disseny coherent i una implementació ràpida.
 
 ## Funcionalitats Implementades
-- **CRUD complet**: Create, Read, Update, Delete de productes
-- **Filtratge**: Cerca per nom, preu i categoria
-- **Paginació**: Gestió de pàgines amb control de nombre d'items per pàgina
-- **Persistència**: Les dades es mantenen durant la sessió de l'aplicació
+- **CRUD complet**: Create, Read, Update, Delete de productes.
+- **Filtratge**: Cerca per nom, preu i categoria.
+- **Paginació**: Gestió de pàgines amb control de nombre d'items per pàgina.
+- **Persistència**: Les dades es mantenen durant la sessió de l'aplicació.
 - **Estructura Escalable**: Components reutilitzables. Separació clara de responsabilitats.
-- **Validació i Gestió d'Errors**: Maneig d'errors amb feedback visual
+- **Validació i Gestió d'Errors**: Maneig d'errors amb feedback visual.

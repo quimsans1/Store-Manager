@@ -52,7 +52,7 @@ app/
       search: '',
       category: ''
     },
-    pagination: {        // Paginació
+    pagination: {        // Paginació//
       page: 1,
       itemsPerPage: 12,
       total: 0
