@@ -36,9 +36,7 @@ npm run lint
 
 ## 🏗️ Arquitectura i Decisions Tècniques
 
-> 📖 **Documentació Detallada**: 
-> - [ARCHITECTURE.md](./ARCHITECTURE.md) - Arquitectura, patrons i escalabilitat
-> - [TECHNICAL_DECISIONS.md](./TECHNICAL_DECISIONS.md) - Justificació de decisions tècniques
+> 📖 **Nota d'Arquitectura Detallada**: Consulta [ARCHITECTURE.md](./ARCHITECTURE.md) per a una explicació completa de l'arquitectura, patrons implementats i decisions de disseny.
 
 ### Stack Tecnològic
 - **React 19** - Framework principal
@@ -50,8 +48,14 @@ npm run lint
 
 ### Decisions d'Arquitectura
 
-#### 1. **Separació per Features**
-L'aplicació està organitzada seguint el patró de **Feature-Based Architecture**:
+#### 1. **Feature-Based Architecture**
+**Decisió**: Organitzar el codi per features en lloc de per tipus de fitxer.
+
+**Justificació**:
+- **Escalabilitat**: Fàcil afegir noves features
+- **Mantenibilitat**: Cada feature és autònoma
+- **Col·laboració**: Equips poden treballar independentment
+
 ```
 src/
 ├── features/
@@ -65,20 +69,39 @@ src/
 └── app/                   # Configuració global
 ```
 
-#### 2. **Gestió d'Estat amb Redux Toolkit**
-- **Async Thunks** per operacions asíncrones
-- **Slices** per organitzar l'estat per funcionalitat
-- **Repository Pattern** per separar l'accés a dades
+#### 2. **Redux Toolkit per Gestió d'Estat**
+**Decisió**: Redux Toolkit en lloc de Context API o Zustand.
 
-#### 3. **Components Reutilitzables**
-- **UI Components** (`/components/ui/`) - Components genèrics
-- **Feature Components** (`/components/products/`) - Components específics
-- **Layout Components** - Estructura de la pàgina
+**Justificació**:
+- **Escalabilitat**: Millor per aplicacions que creixen
+- **DevTools**: Excel·lent debugging i time-travel
+- **Async Operations**: Thunks per operacions asíncrones
+- **Predictabilitat**: Flux de dades unidireccional
 
-#### 4. **Responsive Design**
-- CSS Grid per layouts adaptatius
-- Variables CSS per consistència visual
-- Design system amb colors i tipografia coherents
+#### 3. **Repository Pattern**
+**Decisió**: Implementar Repository Pattern per l'accés a dades.
+
+**Justificació**:
+- **Abstracció**: Separa la lògica de dades de la lògica de negoci
+- **Testabilitat**: Fàcil mockar per testing
+- **Flexibilitat**: Canviar font de dades sense afectar components
+
+#### 4. **Material UI per Components**
+**Decisió**: Utilitzar Material UI per components d'UI.
+
+**Justificació**:
+- **Consistència**: Design system coherent
+- **Accessibilitat**: Components accessibles per defecte
+- **Productivitat**: Components pre-construïts
+- **Customització**: Fàcil personalitzar amb sx prop
+
+#### 5. **Responsive Design Mobile-First**
+**Decisió**: Enfocament mobile-first per responsive design.
+
+**Justificació**:
+- **Usuaris**: Més usuaris mòbils
+- **Performance**: Menys CSS per carregar
+- **Progressive Enhancement**: Millorar des de mòbil
 
 ## 📁 Estructura de Carpetes
 
@@ -164,6 +187,37 @@ npm install --save-dev @testing-library/react @testing-library/jest-dom vitest
 3. **Exportació**: PDF/Excel dels productes
 4. **Notificacions**: Toast notifications
 5. **Dark Mode**: Tema fosc
+
+## 🤔 Decisions No Preses (i Per Què)
+
+### **TypeScript**
+**No implementat**: JavaScript vanilla.
+
+**Raó**: 
+- **Simplicitat**: Menys overhead per aquesta aplicació
+- **Velocitat**: Desenvolupament més ràpid
+- **Learning Curve**: Menys barrera d'entrada
+
+**Quan l'afegiria**: En aplicacions més grans o amb equips grans.
+
+### **CSS-in-JS**
+**No implementat**: CSS tradicional amb variables.
+
+**Raó**:
+- **Performance**: Menys JavaScript overhead
+- **Simplicitat**: CSS més familiar
+- **Bundle Size**: Menys codi JavaScript
+
+**Alternativa considerada**: Styled Components, Emotion.
+
+### **State Management Complex**
+**No implementat**: Redux simple sense middleware complex.
+
+**Raó**:
+- **Simplicitat**: Aplicació no necessita middleware complex
+- **Performance**: Menys overhead
+
+**Quan l'afegiria**: Si necessito cache, optimistic updates, o real-time.
 
 ## 🔧 Configuració de Desenvolupament
 
