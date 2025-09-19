@@ -3,7 +3,7 @@
 ## Instal·lació i Execució
 
 ### Requisits
-- Node.js (versió 19 o superior) i npm
+- Node.js (versió 18 o superior) i npm
 
 ### Instal·lació
 ```bash
