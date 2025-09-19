@@ -3,7 +3,7 @@
 ## Instal·lació i Execució
 
 ### Requisits
-- Node.js (versió 18 o superior) i npm
+- Node.js (versió 19 o superior) i npm
 
 ### Instal·lació
 ```bash
@@ -48,7 +48,7 @@ npm run lint
 ## Decisions Tècniques
 
 ### Stack
-- **React 19**
+- **React 19.1.1**
 - **Redux Toolkit** - Gestió d'estat
 - **React Router v7** - Navegació i routing
 - **Vite**
