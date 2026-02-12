@@ -1,4 +1,4 @@
-# OptimalWay - Prova tècnica
+# Store Manager
 
 ## Instal·lació i Execució
 
