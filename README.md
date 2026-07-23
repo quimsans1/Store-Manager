@@ -1,3 +1,6 @@
+LINK:
+https://store-manager-electronics.netlify.app/
+
 # Store Manager
 
 ## Instal·lació i Execució
